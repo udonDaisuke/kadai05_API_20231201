@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reset.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div>
+            <p>Feel Temp</p>
+        </div>
+    </header>
+    <main>
+        <div id="location">
+            <div class="address_area" id="current">
+                <p class="place_lbl">From</p>
+                <div id="searchBoxContainer_from">
+                    <p id="searchBox_from"></p>
+                </div>
+                <div class ="weather_info" id="weather_current">
+                    
+                </div>
+            </div>
+
+            <div class="address_area" id="to">
+                <p class="place_lbl">To: </p>
+                <div id="searchBoxContainer_to">
+                    <input type="text" id="searchBox_to">
+                </div>
+                <div class ="weather_info" id="weather_to">
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div id="equipment_area">
+            <div id="map_area">
+                <div id="map"></div>
+            </div>
+    
+            <div id="dress_up_area">
+                <p class="category">~top~</p>
+                <div id ="top" class="outfit">
+                    <input id="chk_1" type="checkbox" name="chk_1">
+                    <label class="chk_dressup" for="chk_1"><span>帽子</span></label>
+                </div>
+                <p class="category">~INNER~</p>
+                <fieldset id="inner_radio">
+                    <input id="chk_2" type="radio" name="chk_2">
+                    <label class="chk_dressup" for="chk_2"><span>半袖</span></label>
+                    <input id="chk_3" type="radio" name="chk_2">
+                    <label class="chk_dressup" for="chk_3"><span>長袖(シャツ等)</span></label>
+                    <input id="chk_4" type="radio" name="chk_2">
+                    <label class="chk_dressup" for="chk_3"><span>長袖(セーター等)</span></label>
+                </fieldset>
+                <p class="category">~OUTER~</p>
+                <fieldset id="outer_radio">
+                    <input id="chk_5" type="radio" name="chk_3" checked>
+                    <label class="chk_dressup" for="chk_5" ><span>なし</span></label>
+                    <input id="chk_6" type="radio" name="chk_3">
+                    <label class="chk_dressup" for="chk_6"><span>うすいの</span></label>
+                    <input id="chk_7" type="radio" name="chk_3">
+                    <label class="chk_dressup" for="chk_7"><span>あついの</span></label>
+                </fieldset>
+                <p class="category">~AMBRELLA~</p>
+                <fieldset id="item_radio">
+                    <input id="chk_8" type="radio" name="chk_4" checked>
+                    <label class="chk_dressup" for="chk_8" ><span>なし</span></label>
+                    <input id="chk_9" type="radio" name="chk_4">
+                    <label class="chk_dressup" for="chk_9"><span>あり</span></label>
+                </fieldset>
+            </div>
+            <div id="img_human_area">
+                <img id= "human" src="img/human.png" alt="human">
+                <img class="item" id= "item1" src="img/top.png" alt="human">
+                <img class="item" id= "item2" src="img/inner1.png" alt="human">
+                <img class="item" id= "item3" src="img/inner2.png" alt="human">
+                <img class="item" id= "item4" src="img/inner3.png" alt="human">
+                <img class="item" id= "item5" src="img/outer1.png" alt="human">
+                <img class="item" id= "item6" src="img/outer2.png" alt="human">
+                <img class="item" id= "item7" src="img/kasa.png" alt="human">
+            </div>
+        </div>
+        <div id="question_area">
+            <p id="question">本日の体感温度は？</p>
+            <input id="taikan" type="range" min="1" max="5" value="3">
+            <p id="label">
+                <span>さびぃなぁ</span>
+                <span>ちょい寒</span>
+                <span>普通</span>
+                <span>ちょい暑</span>
+                <span>あちぃなぁ</span>
+            </p>
+
+            <p id="submit">これで行きます</p>
+        </div>
+        <div id="message_area">
+            <p>test message</p>
+        </div>
+
+
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script type ="module" src= "./setting/bingmap_api_key.js"></script> -->
+    <script src="js/BmapQuery.js"></script>
+    <script type="module" src="setting/openweather_api_key.js"></script>
+
+    
+    <!-- MAP追加 -->
+    <script type ="module"> 
+        import {api_key} from "./setting/bingmap_api_key.js"
+        import { api_key_weather } from "./setting/openweather_api_key.js"
+        window.api_key_weather = api_key_weather
+
+        let script = document.createElement("script")
+        script.src = `https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=${api_key}`
+        script.async = true
+        // script.defer = true
+        document.body.appendChild(script)
+    </script>
+    <script>
+        function GetMap(){
+            const map = new Bmap("#map");
+            window.map = map
+
+            // 現在地を取得するための非同期処理
+            function currentPosition(){
+                return new Promise((resolve,reject)=>{
+                position_ret = navigator.geolocation.getCurrentPosition(resolve,reject)
+                })
+            }
+
+            async function getCurrentLocation(){
+                let position = await currentPosition()
+                return position
+            }
+            // 非同期処理を待ちマップを呼び出し
+            getCurrentLocation().then(position => {
+                let lat = position.coords.latitude    
+                let lon = position.coords.longitude
+                console.log(lat,lon)
+                let ret = GetWeather(lat,lon,"current")
+                console.log(ret)
+                // GetMap()    
+                map.startMap(lat, lon, "load", 15); //The place is Bellevue.
+                let pin = map.pin(lat, lon, "rgb(255,10,10)");
+                map.selectedSuggestion("#searchBox_to","#searchBoxContainer_to");
+                // console.log(map.geolocation)
+            })
+            // map.selectedSuggestion("#searchBox","#searchBoxContainer");
+        }
+        async function GetWeather(lat,lon,position=""){
+            console.log(lat,lon)
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&unit=metric&lang=ja&appid=${window.api_key_weather}`);
+            
+            const data = await response.json();
+            console.log(data)
+
+            let current_location = data.name
+            let current_temp_feel_like = data.main.feels_like
+            let current_weather = data.weather[0].description
+            let current_weather_ico = data.weather[0].icon
+            if(position=="current"){
+                $("#searchBox_from").text(`: ${data.name} `)
+                let html =`
+                        <p class="add_temp">${Math.round((current_temp_feel_like-273.15)*10)/10+"℃"}</p>
+                        <p class="add_weather">${current_weather}</p>
+                `
+                $("#weather_current").append(html)
+
+                return data
+            }else{
+                let html =`
+                        <p class="add_temp">${Math.round((current_temp_feel_like-273.15)*10)/10+"℃"}</p>
+                        <p class="add_weather">${current_weather}</p>
+                `
+                // $("#weather_to").append(Math.round((current_temp_feel_like-273.15)*10)/10+"℃")
+                // $("#weather_to").append(current_weather)
+                $("#weather_to").append(html)
+
+                return data
+
+            }
+        }
+        $("#searchBox_to").change(function(){
+            // window.map = map
+            //searchManagerインスタンス化（Geocode,ReverseGeocodeが使用可能になる）
+            $("#location_to").empty()
+                let lat_2 = window.map.map.getCenter().latitude    
+                let lon_2 = window.map.map.getCenter().longitude  
+
+                let ret = GetWeather(lat_2, lon_2)
+        })
+
+            /**
+         * 住所から緯度経度を取得
+         * @param query [住所文字列]
+         */
+        function geocodeQuery(query) {
+            if(window.searchManager) {
+                //住所から緯度経度を検索
+                searchManager.geocode({
+                    where: query,       //検索文字列
+                    callback: function (r) { //検索結果を"( r )" の変数で取得
+                        //最初の検索取得結果をMAPに表示
+                        if (r && r.results && r.results.length > 0) {
+                            //取得た緯度経度をh1要素にJSON文字列にして表示
+                            return r.results[0].location
+                        }
+                    },
+                    errorCallback: function (e) {
+                        return;
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
