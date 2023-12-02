@@ -1,3 +1,7 @@
+html{
+/* background: linear-gradient(rgb(255, 200, 97),  rgb(124, 128, 0)); */
+}
+
 header{
     width: 800px;
     height: 60px;
@@ -22,7 +26,9 @@ header p{
 
 body {
     width: 800px;
-    height: 2000px;
+    /* height: 1000px; */
+    background: linear-gradient(rgb(255, 228, 178),  rgb(219, 224, 98));
+
 }
 main p{
     font-size: 22px;
@@ -113,19 +119,33 @@ fieldset {
 img {
     width: 600px; 
     /* height: 400px; */
+    display: flex;
     height: auto;
     position: absolute;
     top: 0;
     /* left: 50%; */
     background-color: transparent;
     width: 240px;
-    height: 400px;
+    height: 300px;
     object-fit: cover;
-    transition: 0.7s;
-
+    opacity: 1;
+ 
 }
+#human {
+    position:relative;
+    width: 240px;
+    height: 300px;
+
+    object-fit: cover;
+    transition: 0.6s;   
+    filter: drop-shadow(2px 2px 20px white);
+ 
+}
+
+
+
 .item{
-    top:146px;
+    top:196px;
     display: none;
 }
 
@@ -189,13 +209,6 @@ padding-bottom: 10px;
 
 }
 
-#human {
-    position:relative;
-    width: 240px;
-    height: 300px;
-    object-fit: cover;
-    
-}
 
 #question_area {
     width: 100%;

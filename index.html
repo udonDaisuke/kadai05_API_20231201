@@ -46,32 +46,32 @@
             <div id="dress_up_area">
                 <p class="category">~top~</p>
                 <div id ="top" class="outfit">
-                    <input id="chk_1" type="checkbox" name="chk_1">
+                    <input class = "test" id="chk_1" type="checkbox" name="chk_1">
                     <label class="chk_dressup" for="chk_1"><span>帽子</span></label>
                 </div>
                 <p class="category">~INNER~</p>
                 <fieldset id="inner_radio">
-                    <input id="chk_2" type="radio" name="chk_2">
+                    <input class = "test" id="chk_2" type="radio" name="chk_2">
                     <label class="chk_dressup" for="chk_2"><span>半袖</span></label>
-                    <input id="chk_3" type="radio" name="chk_2">
+                    <input class = "test" id="chk_3" type="radio" name="chk_2">
                     <label class="chk_dressup" for="chk_3"><span>長袖(シャツ等)</span></label>
-                    <input id="chk_4" type="radio" name="chk_2">
+                    <input class = "test" id="chk_4" type="radio" name="chk_2">
                     <label class="chk_dressup" for="chk_3"><span>長袖(セーター等)</span></label>
                 </fieldset>
                 <p class="category">~OUTER~</p>
                 <fieldset id="outer_radio">
-                    <input id="chk_5" type="radio" name="chk_3" checked>
+                    <input class = "test" id="chk_5" type="radio" name="chk_3" checked>
                     <label class="chk_dressup" for="chk_5" ><span>なし</span></label>
-                    <input id="chk_6" type="radio" name="chk_3">
+                    <input class = "test" id="chk_6" type="radio" name="chk_3">
                     <label class="chk_dressup" for="chk_6"><span>うすいの</span></label>
-                    <input id="chk_7" type="radio" name="chk_3">
+                    <input class = "test"  id="chk_7" type="radio" name="chk_3">
                     <label class="chk_dressup" for="chk_7"><span>あついの</span></label>
                 </fieldset>
                 <p class="category">~AMBRELLA~</p>
                 <fieldset id="item_radio">
-                    <input id="chk_8" type="radio" name="chk_4" checked>
+                    <input class = "test" id="chk_8" type="radio" name="chk_4" checked>
                     <label class="chk_dressup" for="chk_8" ><span>なし</span></label>
-                    <input id="chk_9" type="radio" name="chk_4">
+                    <input class = "test" id="chk_9" type="radio" name="chk_4">
                     <label class="chk_dressup" for="chk_9"><span>あり</span></label>
                 </fieldset>
             </div>
@@ -81,9 +81,11 @@
                 <img class="item" id= "item2" src="img/inner1.png" alt="human">
                 <img class="item" id= "item3" src="img/inner2.png" alt="human">
                 <img class="item" id= "item4" src="img/inner3.png" alt="human">
-                <img class="item" id= "item5" src="img/outer1.png" alt="human">
-                <img class="item" id= "item6" src="img/outer2.png" alt="human">
-                <img class="item" id= "item7" src="img/kasa.png" alt="human">
+                <img class="item" id= "item5" src="">
+                <img class="item" id= "item6" src="img/outer1.png" alt="human">
+                <img class="item" id= "item7" src="img/outer2.png" alt="human">
+                <img class="item" id= "item8" src="">
+                <img class="item" id= "item9" src="img/kasa.png" alt="human">
             </div>
         </div>
         <div id="question_area">
@@ -181,6 +183,8 @@
                 `
                 // $("#weather_to").append(Math.round((current_temp_feel_like-273.15)*10)/10+"℃")
                 // $("#weather_to").append(current_weather)
+                $("#weather_to").html("")
+
                 $("#weather_to").append(html)
 
                 return data
